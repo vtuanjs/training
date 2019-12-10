@@ -1,0 +1,58 @@
+version: '3'
+services:
+  # api-gateway:
+  #   container_name: training-api-gateway
+  #   build: ./api-gateway
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - .:/api-gateway
+  #   environment:
+  #     NODE_ENV: production
+  user-manager:
+    container_name: user-manager
+    build: ./user-manager
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./user-manager:/usr/src/user-manager
+    environment:
+      NODE_ENV: production
+    depends_on: 
+      - user-mongo
+  # product-manager:
+  #   container_name: training-product-manager
+  #   build: ./product-manager
+  #   ports:
+  #     - "3002:3002"
+  #   volumes:
+  #     - .:/product-manager
+  #   environment:
+  #     NODE_ENV: production
+  #   links: 
+  #     - product-mongo
+  #   depends_on: 
+  #     - product-mongo
+  user-mongo:
+    container_name: user-mongo
+    image: mongo:latest
+    restart: always
+    volumes: 
+      - ./initMongo/mongoUser:/docker-entrypoint-initdb.d/
+    environment: 
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=secret!@#qwer
+    ports:
+      - '27017:27017'
+  # product-mongo:
+  #   container_name: training-product-mongo
+  #   image: mongo:latest
+  #   restart: always
+  #   volumes: 
+  #     - ./initMongo/mongoProduct:/docker-entrypoint-initdb.d/
+  #     - .:/product-mongo
+  #   environment: 
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=secret!@#qwer
+  #   ports:
+  #     - '27018:27018'

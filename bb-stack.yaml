@@ -1,0 +1,7 @@
+version: '3.7'    
+
+services:
+  bb-app:
+    image: books
+    ports:
+      - "4001:4001"   
