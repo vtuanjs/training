@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  app:
+    container_name: api-gateway
+    restart: always
+    build: ./
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
