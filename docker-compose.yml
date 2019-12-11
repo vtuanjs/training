@@ -3,8 +3,6 @@ services:
   gateway:
     image: vtuanjs/api-gateway:v1
     restart: always
-    volumes:
-      - sv-gateway:/gateway
     ports:
       - "3000:3000"
   userapp:
@@ -12,8 +10,6 @@ services:
     restart: always
     ports:
       - "3001:3001"
-    volumes:
-      - sv-user:/user
     deploy: 
       mode: replicated
       replicas: 3
@@ -47,8 +43,6 @@ services:
   productapp:
     image: vtuanjs/product-manager:v1
     restart: always
-    volumes:
-      - sv-product:/product
     ports:
       - "3002:3002"
     deploy: 
@@ -82,9 +76,6 @@ services:
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
       - db-product:/data
 volumes:
-  sv-gateway:
-  sv-user:
-  sv-product:
   db-user:
   db-product:
 networks: 
