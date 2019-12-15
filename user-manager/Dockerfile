@@ -1,8 +1,9 @@
-FROM node:latest
+FROM node:13
 
 WORKDIR /usr/src/app
-COPY package.json .
-RUN npm install    
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --only=production 
 COPY . .
 EXPOSE 3001
 

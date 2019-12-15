@@ -6,3 +6,4 @@ node_modules
 mongo-init.js
 docker-compose.yml
 .vscode
+test

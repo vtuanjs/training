@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 service UserManager {
+  rpc list(Request) returns (Reply){}
   rpc create(Request) returns (Reply){}
 }
 

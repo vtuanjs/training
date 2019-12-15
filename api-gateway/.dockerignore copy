@@ -1,8 +1,0 @@
-.git
-.gitignore
-Dockerfile
-ReadMe.md
-node_modules
-mongo-init.js
-docker-compose.yml
-.vscode

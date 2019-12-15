@@ -5,6 +5,4 @@ services:
     restart: always
     build: ./
     ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
+      - "3001:3001"
