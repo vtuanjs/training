@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 
-docker rm -f product-manager
+# we get the name of our image
+  SERVICE='product-manager'
 
-docker rmi product-manager
+  # we delete the image if it exists already
+  docker rmi vtuanjs/$SERVICE
 
-docker image prune
+  # we create or recreate our image
+  docker-compose build $SERVICE
 
-docker volume prune
+  # we publish our image to our docker hub account
+  docker push vtuanjs/$SERVICE:latest
 
-docker build -t product-manager .
+  # we delete our local image because we are not going to need it
+  # and mantain clean our environment
+  docker rmi vtuanjs/$SERVICE

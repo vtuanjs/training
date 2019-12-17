@@ -2,7 +2,7 @@
 
 eval `docker-machine env manager1`
 
-docker service rm api-gateway users-service products-service
+docker service rm api-gateway user-manager product-manager
 
 for server in manager1 worker1 worker2
 do

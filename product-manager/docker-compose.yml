@@ -1,11 +1,14 @@
 version: "3.7"
 services:
-  product:
-    container_name: product-service
+  product-manager:
+    container_name: product-manager
+    image: vtuanjs/product-manager
     restart: always
     build: .
     ports:
       - "3003:3001"
+    env_file: 
+      - .env
     networks: 
       - backend
   mongo:
@@ -15,10 +18,14 @@ services:
       - 27017:27017
     networks: 
       - backend
+    env_file: 
+      - .env
     environment:
       MONGO_INITDB_DATABASE: "dbtest"
-      MONGO_INITDB_ROOT_USERNAME: "admin"
-      MONGO_INITDB_ROOT_PASSWORD: "password"
+      MONGO_INITDB_ROOT_USERNAME: "dbtest"
+      MONGO_INITDB_ROOT_PASSWORD: "dbtest"
+      MONGODB_USER: "dbtest"
+      MONGODB_PASSWORD: "dbtest"
     volumes:
       - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
       - product-mongo-db:/data/db
