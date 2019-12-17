@@ -1,20 +1,21 @@
 version: "3.7"
 services:
-  user:
-    container_name: user-service
+  user-manager:
+    container_name: user-manager
+    image: vtuanjs/user-manager
     restart: always
     build: .
-    env_file: 
-      - .env
     ports:
       - "3002:3001"
+    env_file: 
+      - .env
     networks: 
       - backend
   mongo:
     container_name: user-mongo
     image: mongo:4.2.1
     ports:
-      - 27018:27017
+      - 27017:27017
     networks: 
       - backend
     env_file: 
@@ -23,8 +24,6 @@ services:
       MONGO_INITDB_DATABASE: "dbtest"
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
-      MONGODB_USER: "${MONGODB_USER_NAME}"
-      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
     volumes:
       - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
       - user-mongo-db:/data/db
@@ -32,6 +31,6 @@ services:
 volumes:
   user-mongo-db:
   user-mongo-backup:
-networks:
+networks: 
   backend:
 

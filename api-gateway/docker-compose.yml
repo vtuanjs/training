@@ -2,7 +2,8 @@ version: '3.7'
 services:
   api-gateway:
     container_name: api-gateway
+    image: vtuanjs/api-gateway
     restart: always
-    build: ./
+    build: .
     ports:
       - "3001:3001"

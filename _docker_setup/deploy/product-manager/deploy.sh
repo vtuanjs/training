@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Connect manager 1: docker-machine ssh manager1
-# And run...
-mkdir -p /usr/mongodb/data/db /usr/mongodb/data/backup
+# Run at manager1
 
-env MONGO_INITDB_ROOT_USERNAME="root" \
-env MONGO_INITDB_ROOT_PASSWORD="pass" \
+env MONGO_INITDB_ROOT_USERNAME="dbtest" \
+env MONGO_INITDB_ROOT_PASSWORD="dbtest" \
+env MONGODB_USER_NAME="dbtest" \
+env MONGODB_PASSWORD="dbtest" \
 docker stack deploy \
 --compose-file docker-compose.yml \
 product

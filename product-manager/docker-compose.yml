@@ -15,17 +15,15 @@ services:
     container_name: product-mongo
     image: mongo:4.2.1
     ports:
-      - 27017:27017
+      - 27018:27017
     networks: 
       - backend
     env_file: 
       - .env
     environment:
       MONGO_INITDB_DATABASE: "dbtest"
-      MONGO_INITDB_ROOT_USERNAME: "dbtest"
-      MONGO_INITDB_ROOT_PASSWORD: "dbtest"
-      MONGODB_USER: "dbtest"
-      MONGODB_PASSWORD: "dbtest"
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
       - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
       - product-mongo-db:/data/db

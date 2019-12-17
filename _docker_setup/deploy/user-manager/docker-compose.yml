@@ -1,60 +1,57 @@
 version: "3.7"
 services:
-  user:
-    image: vtuanjs/user-manager
-    ports:
-      - "3002:3001"
-    env_file: 
-      - .env
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
-      placement:
-        constraints:
-          - node.role == worker
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 500M
-        reservations:
-          cpus: "0.25"
-          memory: 50M
   mongo:
     image: mongo:4.2.1
     ports:
       - 27017:27017
-    networks: 
+    networks:
       - backend
-    env_file: 
-      - .env
     environment:
       MONGO_INITDB_DATABASE: "dbtest"
-      MONGODB_USER_NAME: "${MONGODB_USER_NAME}"
-      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
     volumes:
-      - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js:ro
-      - user-mongo-db:/data/db
-      - user-mongo-backup:/backup
+      - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js
+      - mongo-user-db:/data/db
+      - mongo-user-backup:/backup
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
       placement:
         constraints:
-          - node.role == worker
+          - node.role == manager
       resources:
         limits:
           cpus: "0.5"
           memory: 500M
         reservations:
-          cpus: "0.25"
           memory: 50M
+  app:
+    image: vtuanjs/user-manager
+    ports:
+      - "3002:3001"
+    environment:
+      MONGODB_USER_NAME: "${MONGODB_USER_NAME}"
+      MONGODB_PASSWORD: "${MONGODB_PASSWORD}"
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == worker
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+        reservations:
+          memory: 50M
+    networks: 
+      - backend
 volumes:
-  user-mongo-db:
-  user-mongo-backup:
-networks:
+  mongo-user-db:
+  mongo-user-backup:
+networks: 
   backend:
 

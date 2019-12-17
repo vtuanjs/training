@@ -14,4 +14,4 @@
 
   # we delete our local image because we are not going to need it
   # and mantain clean our environment
-  docker rmi $SERVICE
+  docker rmi vtuanjs/$SERVICE

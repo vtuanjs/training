@@ -15,7 +15,7 @@ exports.load = () => {
     let customConfig = {
       mongodb_user_name : process.env.MONGODB_USER_NAME,
       mongodb_password : process.env.MONGODB_PASSWORD,
-      mongodb_connection_string : "mongodb://mongo:27017/dbtest"
+      mongodb_connection_string : `mongodb://user_mongo:27017/dbtest`
     }
 
     appConfig = Object.assign(appConfig, customConfig);

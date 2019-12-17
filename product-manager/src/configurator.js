@@ -11,15 +11,15 @@ exports.load = () => {
     appConfig = JSON.parse(fs.readFileSync(defaultConfigPath, { encoding: 'utf-8' }));
   }
 
-  // if (process.env.MONGODB_USER_NAME){
-  //   let customConfig = {
-  //     mongodb_user_name : process.env.MONGODB_USER_NAME,
-  //     mongodb_password : process.env.MONGODB_PASSWORD,
-  //     mongodb_connection_string : `mongodb://product_mongo:27017/dbtest`
-  //   }
+  if (process.env.MONGODB_USER_NAME){
+    let customConfig = {
+      mongodb_user_name : process.env.MONGODB_USER_NAME,
+      mongodb_password : process.env.MONGODB_PASSWORD,
+      mongodb_connection_string : `mongodb://product_mongo:27017/dbtest`
+    }
 
-  //   appConfig = Object.assign(appConfig, customConfig);
-  // }
+    appConfig = Object.assign(appConfig, customConfig);
+  }
 
   if (fs.existsSync(customConfigPath)) {
     let customConfig = JSON.parse(fs.readFileSync(customConfigPath, { encoding: 'utf-8' }));
