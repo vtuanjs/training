@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  app:
+    image: vtuanjs/product-manager
+    ports:
+      - "3003:3001"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+        reservations:
+          cpus: "0.25"
+          memory: 50M
+    networks: 
+      - backend
+  mongo:
+    image: mongo:4.2.1
+    ports:
+      - 27018:27017
+    networks:
+      - backend
+    environment:
+      MONGO_INITDB_DATABASE: "dbtest"
+      MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
+    volumes:
+      - ./initdb.js:/docker-entrypoint-initdb.d/initdb.js
+      - mongo-db:/data/db
+      - mongo-backup:/backup
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: "0.6"
+          memory: 500M
+        reservations:
+          memory: 50M
+volumes:
+  mongo-db:
+  mongo-backup:
+networks: 
+  backend:
+
